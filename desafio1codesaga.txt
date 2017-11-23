@@ -11,7 +11,6 @@ end
 
   it '3 multiplos de 6' do
     
-
     expect(ArrayUtils.multiplos(3,6)).to eq [6, 12, 18]
   end
 
