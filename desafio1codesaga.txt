@@ -1,0 +1,157 @@
+ spec/arrays_utils_spec.rb
+require 'spec_helper'
+
+describe 'Array' do
+  
+it 'lista de numeros multiplos de 2' do
+    
+expect(ArrayUtils.multiplos(5,2)).to eq [2, 4, 6, 8, 10]
+  
+end
+
+  it '3 multiplos de 6' do
+    
+
+    expect(ArrayUtils.multiplos(3,6)).to eq [6, 12, 18]
+  end
+
+  it 'tabuada de 1 a 10' do
+    
+
+    expect(ArrayUtils.tabuada(10)).to eq [
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      [2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+      
+      [3, 6, 9, 12, 15, 18, 21, 24, 27, 30],
+      [4, 8, 12, 16, 20, 24, 28, 32, 36, 40],
+      
+      [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+      [6, 12, 18, 24, 30, 36, 42, 48, 54, 60],
+      
+	  [7, 14, 21, 28, 35, 42, 49, 56, 63, 70],
+      [8, 16, 24, 32, 40, 48, 56, 64, 72, 80],
+      
+      [9, 18, 27, 36, 45, 54, 63, 72, 81, 90],
+      [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    ]
+  
+end
+
+  it 'tabuada de 1 a 3' do
+   
+    expect(ArrayUtils.tabuada(3)).to eq [
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      [2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+      
+      [3, 6, 9, 12, 15, 18, 21, 24, 27, 30],
+    ]
+  end
+
+  it 'ultimo' do
+    
+    lista = [2, 4, 56, 71]
+    expect(ArrayUtils.ultimo(lista)).to eq 71
+  
+end
+
+  it 'ultimo hard!' do
+    
+    lista = [56, 2, 4, 71, 6]
+    
+allow(lista).to receive(:last).and_throw(Exception)
+    expect(ArrayUtils.ultimo(lista)).to eq 6
+  
+ end
+end
+ lib/array_utils.rb
+class ArrayUtils
+  
+ def self.multiplos(qtd, multiplo)
+		array = []
+		count = 1
+		#pega o multiplo e multiplica pelo count pra varrer o vetor	
+		while count <= qtd
+				array << multiplo * count
+				count = count + 1
+        end
+ 		   
+	    array
+ end
+
+ def self.tabuada(num)
+	array_numero = []
+	array_tabuada = []
+	count = 1
+	cont = 1
+	#dois contadores, um pra varrer os numeros um a um e outro pra multiplicar
+	#dois loops, um do número recebido-parametro e outro da contagem de 1 a 10 
+	while count <= num
+		while cont <= 10
+			array_numero << count * cont
+		    cont = cont + 1 
+		end
+		array_tabuada << array_numero
+		count = count + 1
+		#voltar o cont pra 1 senão sai do loop
+		#limpar o array_numero para refazer o loop
+		cont = 1
+		array_numero = []
+	end
+	
+	array_tabuada
+ end
+ 
+ def self.ultimo(lista)	
+	lista[lista.length-1]
+ end
+ 
+end
+
+ Gemfile.lock
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activesupport (4.2.5)
+      i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
+    diff-lcs (1.2.5)
+    i18n (0.7.0)
+    json (1.8.3)
+    minitest (5.8.3)
+    rake (10.4.2)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.1)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
+    thread_safe (0.3.5)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+
+PLATFORMS
+  ruby
+  x86-mingw32
+
+DEPENDENCIES
+  activesupport
+  rake
+  rspec
+
+BUNDLED WITH
+   1.11.2
+ Gemfile
+source "http://rubygems.org"
+gem 'rspec'
+gem 'rake'
+gem 'activesupport'
