@@ -1,0 +1,21 @@
+ lib/echo.rb
+class Echo
+	def message(string)
+		#detecta a interrogação no fim da frase
+		if string[-1] == "?"
+			return "Só faço echo, não respondo perguntas."
+		end
+		#detecta letra maiúscula e o ponto de exclamação no fim da frase
+		if string == string.upcase && string[-1] == "!" 
+			return "Não faço echo de gritos."
+		end
+		#elimina os espaços e detecta que está vazio
+		if string.strip == ""
+			return "Nada?"
+		end
+		#se não entrar nas condições acima escreve a mensagem como entrou
+		else
+			return string
+		
+	end
+end

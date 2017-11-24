@@ -1,0 +1,41 @@
+ lib/quadrados.rb
+require 'prime'
+class Quadrados
+	#metodo de initialize, declarada uma vez aqui, pode-se usar em outros metodos
+	def initialize(num)
+		lista = []
+		@lista = Prime.take(num)
+	end
+	
+	#metodo que calcula o quadrado da soma
+	def quadrado_da_soma
+		
+		soma = 0
+		count = 0
+		
+		while count < @lista.length
+		soma = soma + @lista[count]
+		count = count + 1
+		end
+		soma ** 2
+	end
+	
+	#metodo que calcula a soma dos quadrados
+	def soma_dos_quadrados
+	
+		soma = 0
+		count = 0
+		
+		while count < @lista.length
+		soma = soma + @lista[count] ** 2
+		count = count + 1
+		end
+		soma
+	end
+	
+	#como já tem os metodos, é só fazer a diferenca
+	def diferenca
+	
+		quadrado_da_soma - soma_dos_quadrados
+	end
+end

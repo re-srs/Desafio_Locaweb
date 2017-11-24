@@ -1,0 +1,27 @@
+ spec/customer_spec.rb
+require 'spec_helper'
+require File.expand_path('../../lib/customer.rb', __FILE__)
+
+describe Customer do
+  it '#full_name' do
+    #pending 'remova essa linha e implemente seu teste'
+	name = "Jose"
+	surname = "Silva"
+	title = "Melhor"
+	customer = cria_customer
+	expect(customer.full_name).to eq "#{surname}, #{name}"
+  end
+
+  it '#full_qualified_name' do
+    #pending 'remova essa linha e implemente seu teste'
+	customer = cria_customer
+	name = "Jose"
+	surname = "Silva"
+	title = "Melhor"
+	expect(customer.full_qualified_name).to eq "#{title} #{name} #{surname}"
+  end
+  
+  def cria_customer(name = "Jose", surname = "Silva", title = "Melhor")
+    Customer.new(name: name, surname: surname, title: title)
+  end
+end

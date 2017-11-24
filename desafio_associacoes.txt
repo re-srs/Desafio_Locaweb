@@ -1,0 +1,70 @@
+ spec/models/agree_spec.rb
+require 'rails_helper'
+
+RSpec.describe Agree, type: :model do
+  #pending "add some examples to (or delete) #{__FILE__}"
+end
+ db/schema.rb
+# encoding: UTF-8
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema.define(version: 20161031013034) do
+
+  create_table "agrees", force: :cascade do |t|
+    t.integer  "opinion_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "agrees", ["opinion_id"], name: "index_agrees_on_opinion_id"
+
+  create_table "opinions", force: :cascade do |t|
+    t.string "body"
+  end
+
+end
+ db/migrate/20161031013034_create_agrees.rb
+class CreateAgrees < ActiveRecord::Migration
+  def change
+    create_table :agrees do |t|
+      t.references :opinion, index: true
+
+      t.timestamps null: false
+    end
+    add_foreign_key :agrees, :opinions
+  end
+end
+ app/models/opinion.rb
+class Opinion < ActiveRecord::Base
+  has_many :agrees
+  validates :body, presence: true
+  validates :body, length: { maximum: 150, message: 'is too long' }
+  validates :body, format: {
+    without: /Petralha|Dilma|Tucanos/,
+    message: 'Contains political words'
+  }
+end
+ app/models/agree.rb
+class Agree < ActiveRecord::Base
+  belongs_to :opinion
+end
+ app/controllers/agrees_controller.rb
+class AgreesController < ApplicationController
+  # adicione sua action aqui
+  def create #metodo criar
+	@agrees = Agree.create('opinion_id' => params[:opinion_id])
+	redirect_to root_path	
+
+   end
+
+end

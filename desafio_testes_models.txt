@@ -1,0 +1,95 @@
+ spec/models/challenge_spec.rb
+require 'rails_helper'
+
+describe Challenge, type: :model do
+  describe '#full_repo_name' do
+    it 'returns a full repo name' do
+      #pending 'escreva seu teste!'
+	  repo_name = "Renata Lobato"
+	  challenge = Challenge.create(repo_name: repo_name)
+	  
+    end
+
+    it 'returns blank when there is no repo name present' do
+      #pending 'escreva seu teste!'
+	   repo_name = " "
+	   challenge = Challenge.create(repo_name: nil)
+    end
+  end
+
+  context 'validation' do
+    it 'valid with name, description and code_points' do
+      #pending 'escreva seu teste!'
+	  challenge = Challenge.new
+	  expect(challenge.valid?).to eq false
+    end
+
+    it 'invalid without name' do
+      #alterei,tinha esquecido de validar'
+	  name = nil
+	  challenge = Challenge.new(name: name)
+	  expect(challenge.valid?).to eq false
+	end
+
+    it 'invalid without description' do
+      #alterei,tinha esquecido de validar'
+	  description = nil
+	  challenge = Challenge.new(description: description)
+	  expect(challenge.valid?).to eq false
+    end
+
+    it 'invalid without code_points' do
+      #alterei,tinha esquecido de validar'
+	  code_points = nil
+	  challenge =  Challenge.new(code_points: code_points)
+	  expect(challenge.valid?).to eq false
+    end
+
+    it 'invalid without any data' do
+      challenge = Challenge.new
+      # voce pode validar um model assim
+      expect(challenge).to_not be_valid
+      # ou assim
+      expect(challenge.valid?).to eq false
+    end
+
+    it 'code points must be a number' do
+      #alterei,  creio que é a solução correta!'
+	  challenge = Challenge.new(code_points: 16)
+	  expect(challenge.errors).to_not include :code_points
+    end
+
+    it 'invalid with code points any but a number' do
+      challenge = Challenge.create(code_points: 'number')
+      expect(challenge.errors.include?(:code_points)).to eq true
+      expect(challenge.errors.messages[:code_points])
+        .to include 'is not a number'
+    end
+  end
+end
+ db/schema.rb
+# encoding: UTF-8
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema.define(version: 20161023014738) do
+
+  create_table "challenges", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "code_points"
+    t.string   "description"
+    t.string   "repo_name"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+end
